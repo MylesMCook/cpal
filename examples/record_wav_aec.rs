@@ -1,7 +1,7 @@
 //! Records a WAV file using the default input device with echo cancellation requested.
 //!
 //! On Windows, sets `StreamConfig.windows_input_aec`. On macOS, passes
-//! `MacosVoiceProcessingInputConfig::screenpipe_aec()`. Other platforms record normally.
+//! `MacosVoiceProcessingInputConfig::rearview_aec()`. Other platforms record normally.
 
 use clap::Parser;
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
@@ -148,7 +148,7 @@ where
             move |data: &[T], _: &cpal::InputCallbackInfo| write_input_data::<T, U>(data, &writer),
             err_fn,
             None,
-            Some(cpal::MacosVoiceProcessingInputConfig::screenpipe_aec()),
+            Some(cpal::MacosVoiceProcessingInputConfig::rearview_aec()),
         )
     }
     #[cfg(not(target_os = "macos"))]
